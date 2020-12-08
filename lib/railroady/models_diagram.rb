@@ -128,14 +128,18 @@ class ModelsDiagram < AppDiagram
         content_columns = current_class.columns
       end
 
+      node_attribs << "PROPERTIES"
       content_columns.each do |a|
         content_column = a.name
         content_column += ' :' + a.sql_type.to_s unless @options.hide_types
         node_attribs << content_column
       end
 
+      node_attribs << " "
+      node_attribs << "METHODS"
+
       current_class.public_instance_methods(false).sort.each do |m|
-        node_attribs << "method_#{m}"
+        node_attribs << m
       end 
     end
     @graph.add_node [node_type, current_class.name, node_attribs]
